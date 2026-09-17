@@ -258,11 +258,11 @@
       errorBox.classList.remove('show');
     }
 
-    function openWhatsApp(nama, telepon) {
-      const pesan = `Halo Admin ${HOUSING_NAME}, saya ${nama} (${telepon}). Saya ingin bertanya info rumah di ${HOUSING_NAME}, Mejayan - Caruban.`;
-      const url = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
-      window.location.href = url;
-    }
+function openWhatsApp(nama, telepon) {
+  const pesan = `Halo Admin ${HOUSING_NAME}, saya ${nama}. Saya ingin bertanya info rumah di ${HOUSING_NAME}, Mejayan - Caruban.`;
+  const url = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
+  window.location.href = url;
+}
 
     // Timeout jaga-jaga: kalau request ke Apps Script lambat/gagal,
     // tetap arahkan ke WhatsApp setelah beberapa detik.
