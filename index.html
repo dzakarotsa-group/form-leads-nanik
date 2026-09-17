@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Castila Garden Caruban</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EFE9DC;
+    --card: #FDFBF6;
+    --ink: #1C2420;
+    --muted: #756E5E;
+    --line: #DED5C2;
+    --pine: #24402B;
+    --pine-dark: #1A3020;
+    --brass: #A9812F;
+    --error: #A63B2A;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 40px 32px 32px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.6s ease-out forwards;
+  }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { animation: none; opacity: 1; transform: none; }
+  }
+
+  .mark {
+    display: block;
+    margin: 0 auto 18px;
+    width: 34px;
+    height: 34px;
+    color: var(--pine);
+  }
+
+  h1 {
+    margin: 0;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1.25;
+    color: var(--pine-dark);
+  }
+
+  .address {
+    margin: 8px 0 0;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .rule {
+    width: 40px;
+    height: 2px;
+    background: var(--brass);
+    border: none;
+    margin: 24px auto 24px;
+  }
+
+  form { margin: 0; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .field { margin-bottom: 18px; }
+
+  input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  input:focus { border-color: var(--pine); }
+
+  input:focus-visible {
+    outline: 2px solid var(--pine);
+    outline-offset: 1px;
+  }
+
+  .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px 16px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--pine);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  button:hover:not(:disabled) { background: var(--pine-dark); }
+
+  button:disabled {
+    background: #9CA79A;
+    cursor: default;
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: none;
+  }
+
+  button.loading .spinner { display: inline-block; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error {
+    display: none;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 3px;
+    background: #F7E9E5;
+    border: 1px solid #E4BEB2;
+    color: var(--error);
+    font-size: 13px;
+  }
+
+  .error.show { display: block; }
+
+  .status {
+    display: none;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .status.show { display: block; }
+</style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 22L24 7L42 22" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M11 19V40H37V19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M20 40V27H28V40" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <h1>Castila Garden Caruban</h1>
+    <p class="address">Mejayan &ndash; Caruban</p>
+
+    <hr class="rule" />
+
+    <form id="leadForm" novalidate>
+      <div class="field">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" autocomplete="name" required />
+      </div>
+
+      <div class="field">
+        <label for="telepon">Nomor WhatsApp</label>
+        <input type="tel" id="telepon" name="telepon" inputmode="tel" autocomplete="tel"
+               placeholder="08xxxxxxxxxx" required />
+        <p class="hint">Data ini akan disimpan dan dipakai admin untuk membalas via WhatsApp.</p>
+      </div>
+
+      <button type="submit" id="submitBtn">
+        <span class="spinner"></span>
+        <span class="btn-label" id="btnLabel">Tanya Info Rumah</span>
+      </button>
+
+      <div class="error" id="errorBox"></div>
+      <div class="status" id="statusBox">Menyimpan data dan membuka WhatsApp&hellip;</div>
+    </form>
+  </div>
+
+  <script>
+    // GANTI dengan URL Web App Apps Script kamu (format: https://script.google.com/macros/s/XXXXX/exec)
+    const SCRIPT_URL = 'PASTE_URL_WEB_APP_DI_SINI';
+
+    const HOUSING_NAME = 'Castila Garden Caruban';
+    const ADMIN_WA_NUMBER = '6285232204071';
+
+    const form = document.getElementById('leadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnLabel = document.getElementById('btnLabel');
+    const errorBox = document.getElementById('errorBox');
+    const statusBox = document.getElementById('statusBox');
+
+    function setLoading(isLoading) {
+      submitBtn.disabled = isLoading;
+      submitBtn.classList.toggle('loading', isLoading);
+      btnLabel.textContent = isLoading ? 'Mengirim...' : 'Tanya Info Rumah';
+    }
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.add('show');
+    }
+
+    function clearError() {
+      errorBox.classList.remove('show');
+    }
+
+    function openWhatsApp(nama, telepon) {
+      const pesan = `Halo Admin ${HOUSING_NAME}, saya ${nama} (${telepon}). Saya ingin bertanya info rumah di ${HOUSING_NAME}, Mejayan - Caruban.`;
+      const url = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
+      window.location.href = url;
+    }
+
+    // Timeout jaga-jaga: kalau request ke Apps Script lambat/gagal,
+    // tetap arahkan ke WhatsApp setelah beberapa detik.
+    function withTimeout(promise, ms) {
+      return Promise.race([
+        promise,
+        new Promise((resolve) => setTimeout(resolve, ms))
+      ]);
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearError();
+
+      const nama = document.getElementById('nama').value.trim();
+      const telepon = document.getElementById('telepon').value.trim();
+
+      if (!nama) {
+        showError('Nama lengkap wajib diisi.');
+        return;
+      }
+      if (telepon.replace(/[^0-9]/g, '').length < 9) {
+        showError('Nomor WhatsApp belum valid.');
+        return;
+      }
+      if (SCRIPT_URL.indexOf('PASTE_URL') !== -1) {
+        showError('SCRIPT_URL belum diisi di kode index.html.');
+        return;
+      }
+
+      setLoading(true);
+      statusBox.classList.add('show');
+
+      // mode 'no-cors' dipakai karena Apps Script tidak mengirim header CORS.
+      // Konsekuensinya: response tidak bisa dibaca (opaque), jadi kita anggap
+      // sukses jika tidak melempar error jaringan, lalu tetap lanjut ke WhatsApp.
+      const request = fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ nama: nama, telepon: telepon })
+      });
+
+      withTimeout(request, 6000)
+        .then(() => {
+          openWhatsApp(nama, telepon);
+        })
+        .catch(() => {
+          setLoading(false);
+          statusBox.classList.remove('show');
+          showError('Gagal terhubung ke server. Periksa koneksi internet dan coba lagi.');
+        });
+    });
+  </script>
+
+</body>
+</html>
