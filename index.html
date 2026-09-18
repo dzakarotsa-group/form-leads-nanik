@@ -7,6 +7,26 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1433749435292013');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1433749435292013&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
 <style>
   :root{
     --bg: #EFE9DC;
@@ -258,11 +278,11 @@
       errorBox.classList.remove('show');
     }
 
-function openWhatsApp(nama, telepon) {
-  const pesan = `Halo Admin ${HOUSING_NAME}, saya ${nama}. Saya ingin bertanya info rumah di ${HOUSING_NAME}, Mejayan - Caruban.`;
-  const url = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
-  window.location.href = url;
-}
+    function openWhatsApp(nama, telepon) {
+      const pesan = `Halo Admin ${HOUSING_NAME}, saya ${nama}. Saya ingin bertanya info rumah di ${HOUSING_NAME}, Mejayan - Caruban.`;
+      const url = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(pesan)}`;
+      window.location.href = url;
+    }
 
     // Timeout jaga-jaga: kalau request ke Apps Script lambat/gagal,
     // tetap arahkan ke WhatsApp setelah beberapa detik.
@@ -308,6 +328,12 @@ function openWhatsApp(nama, telepon) {
 
       withTimeout(request, 6000)
         .then(() => {
+          // Meta Pixel: catat konversi Lead saat form berhasil dikirim.
+          if (typeof fbq === 'function') {
+            fbq('track', 'Lead', {
+              content_name: HOUSING_NAME
+            });
+          }
           openWhatsApp(nama, telepon);
         })
         .catch(() => {
